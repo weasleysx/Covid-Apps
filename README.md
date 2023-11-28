@@ -4,20 +4,6 @@ An app template for using Next.js with Firebase and Typescript!
 
 ## Demo: [next-firebase-ts.vercel.app](https://next-firebase-ts.vercel.app)
 
-## Project Overview / Technologies
-
-- Framework: [Next.js](https://nextjs.org/) (which uses [React](https://reactjs.org))
-- Authentication and Database: [Firebase](https://firebase.google.com/)
-  - Firebase makes secure authentication almost trivial, providing simple APIs and CLIs with minimal boilerplate
-  - Firebase also provides handy UI components for sign-in with [FirebaseUI](https://firebase.google.com/docs/auth/web/firebaseui)
-  - Some server-side authentication which makes use of [Nookies](https://www.npmjs.com/package/nookies)
-  - Optional use of serverless Firebase [Cloud Functions](https://firebase.google.com/products/functions)
-- Language: [Typescript](https://www.typescriptlang.org/)
-- Styles: [Tailwind](https://tailwindcss.com/)
-  - Also [Headless UI](https://headlessui.dev/), a handy set of styled UI components atop Tailwind
-- Hosting and CD: [Vercel](https://vercel.com/)
-
----
 
 ## Getting Started
 
@@ -108,17 +94,3 @@ This template contains a simple use case of cloud functions, which adds a user e
 ```
 
 ---
-
-## Acknowledgements and Resources
-
-I used plenty of handy resources to help me understand how the different Next.js and Firebase pieces fit together. Here are a few I used to get started:
-
-- Jarrod Watts's [NextJS + Firebase Tutorial](https://github.com/jarrodwatts/pineapple)
-- Shreyas Jadhav's [next-firebase-starter](https://github.com/shreyas-jadhav/next-firebase-starter)
-
-### Additional Documentation
-
-- [Next.js docs](https://nextjs.org/docs)
-- [Firebase docs](https://firebase.google.com/docs)
-- [Tailwind docs](https://tailwindcss.com/docs/)
-- [Vercel docs](https://vercel.com/docs)
