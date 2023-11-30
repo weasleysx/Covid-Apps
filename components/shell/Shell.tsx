@@ -2,20 +2,18 @@
 import React from "react";
 import Footer from "./Footer/Footer";
 import Dashboard from "../dashboard";
-type Props = {
-  children: JSX.Element;
-};
 
-export default function Shell({ children }: Props) {
+
+export default function Shell() {
   return (
     <>
-      <div className="hidden h-screen md:grid grid-cols-custom-sidenav-layout">
-        {/* <main>{children}</main> */}
+      <div className="h-screen md:grid grid-cols-custom-sidenav-layout">
         <main>
           <Dashboard />
-          </main>
+        </main>
+        <Footer />
+       
       </div>
-      <Footer />
     </>
   );
 }

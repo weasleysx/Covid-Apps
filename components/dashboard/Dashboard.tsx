@@ -1,5 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
+import { signOut } from "../../utils/genericUtils";
+import Svg from "../svg";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from 'date-fns';
+import { db } from "../../firebase/clientApp"; // Import your Firebase configuration
+
+
 
 const AnimatedForm = ({ children }) => {
   const props = useSpring({
@@ -9,132 +17,209 @@ const AnimatedForm = ({ children }) => {
 
   return <animated.div style={props}>{children}</animated.div>;
 };
+  
 
 const Dashboard = () => {
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
-  const [email, setEmail] = useState("");
+  const [career, setCareer] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
   const [message, setMessage] = useState({ text: "", maxlength: 500 });
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+  const handleAddTimeline = async () => {
+    try {
+      const formattedDate = selectedDate ? format(selectedDate, 'yyyy-MM-dd HH:mm:ss') : null;
+
+      
+      // Prepare data to be added to Firestore
+      const timelineData = {
+        gender,
+        age,
+        career,
+        datetime: formattedDate,
+        details: message.text,
+      };
+
+      // Add data to Firestore collection
+      await db.collection("timelines").add(timelineData);
+
+      // Reset form fields
+      setGender("");
+      setAge("");
+      setCareer("");
+      setMessage({ text: "", maxlength: 500 });
+      setSelectedDate(null); // Reset the selected date
+
+      console.log("Timeline added to Firestore!");
+    } catch (error) {
+      console.log(error);
+      
+      console.error("Error adding timeline to Firestore: ", error);
+    }
+  };
+  const [timelineData, setTimelineData] = useState([]);
+  useEffect(() => {
+    // Function to fetch data from Firestore
+    const fetchData = async () => {
+      try {
+        const snapshot = await db.collection("timelines").get();
+        const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setTimelineData(data);
+      } catch (error) {
+        console.error("Error fetching timeline data from Firestore: ", error);
+      }
+    };
+
+    fetchData();
+  }, []); 
+
 
   return (
     <>
-      <div className="text-5xl font-bold text-[#ffc107] text-start pt-6 pb-2 px-6">
-        COVID Timeline Generator
+      <div className="flex items-center justify-between text-5xl font-bold text-[#ffc107] text-start pt-6 pb-2 px-6">
+        <span>COVID Timeline Generator</span>
+        <a
+          href=""
+          className="flex ml-1 items-center mt-3 px-1 pb-5 mr-5 no-underline text-blue-50 opacity-70 hover:opacity-100"
+          onClick={signOut}
+        >
+          <Svg.SignOutSvg />
+          <div className="pl-2">Sign Out</div>
+        </a>
       </div>
       <div className=" grid grid-cols-3 grid-rows-2 m-10">
-      <AnimatedForm>
-        <div className=" col-span-1">
-          <form className="vue-form bg-[#234973] m-2 p-5 flex flex-col">
-            <fieldset>
-              <legend className="pt-3">ข้อมูลผู้ป่วย</legend>
-              <div className="pt-2 flex">
-                    {/* Gender */}
-                    <div className="flex-1 pr-2">
-                      <label className="label pb-2" htmlFor="gender">
-                        เพศ
-                      </label>
-                      <input
-                        type="text"
-                        name="gender"
-                        id="gender"
-                        required
-                        value={gender}
-                        onChange={(e) => setGender(e.target.value)}
-                        className="w-full border p-1"
-                      />
-                    </div>
-                    {/* Age */}
-                    <div className="flex-1 pl-2">
-                      <label className="label pb-2" htmlFor="age">
-                        อายุ
-                      </label>
-                      <input
-                        type="text"
-                        name="age"
-                        id="age"
-                        required
-                        value={age}
-                        onChange={(e) => setAge(e.target.value)}
-                        className="w-full border p-1"
-                      />
-                    </div>
-                  </div>
-                  <div className="pt-2">
-                    <label className="label pb-2" htmlFor="email">
-                      อาชีพ
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      required
-                      className="w-full border p-1"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </div>
-            </fieldset>
-          </form>
-        </div>
-        </AnimatedForm>
-        <div className=" col-span-2 row-span-2 ml-2">
         <AnimatedForm>
-        <form className="vue-form border-2 border-[#ffc107] m-2 p-5 flex flex-col">
+          <div className=" col-span-1">
+            <form className="vue-form bg-[#234973] m-2 p-5 flex flex-col">
               <fieldset>
-              <div className="text-3xl font-bold text-[#ffc107] text-center pt-2 pb-2 px-6">Timeline </div>
-                <div className="pt-2">
-                  <div className="bg-[#ffc107] rounded-full	w-1/3  mx-auto	p-10"></div>
-
-                  {/* ... (rest of the form fields) */}
-                </div>
-              </fieldset>
-              </form>
-              </AnimatedForm>
-        </div>
-        <AnimatedForm>
-        <div className=" col-span-1">
-        <form className="vue-form bg-[#234973] m-2 p-5 flex flex-col">
-                <fieldset>
-                  <legend className="pt-3">ข้อมูลไทม์ไลน์</legend>
-                  <div className="pt-2">
-                    <label className="label pb-2" htmlFor="datetime">
-                      วันเวลา
+                <legend className="pt-3">ข้อมูลผู้ป่วย</legend>
+                <div className="pt-2 flex">
+                  {/* Gender */}
+                  <div className="flex-1 pr-2">
+                    <label className="label pb-2" htmlFor="gender">
+                      เพศ
                     </label>
                     <input
                       type="text"
-                      name="datetime"
-                      id="datetime"
+                      name="gender"
+                      id="gender"
+                      required
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
+                      className="w-full border p-1"
+                    />
+                  </div>
+                  {/* Age */}
+                  <div className="flex-1 pl-2">
+                    <label className="label pb-2" htmlFor="age">
+                      อายุ
+                    </label>
+                    <input
+                      type="number"
+                      name="age"
+                      id="age"
                       required
                       value={age}
                       onChange={(e) => setAge(e.target.value)}
-                      className="border p-2"
+                      className="w-full border p-1"
                     />
                   </div>
-                  <div>
-                    <label className="label py-2" htmlFor="textarea">
-                      รายละเอียด
-                    </label>
-                    <textarea
-                      className="message"
-                      name="textarea"
-                      id="textarea"
-                      required
-                      value={message.text}
-                      maxLength={message.maxlength}
-                      onChange={(e) =>
-                        setMessage({
-                          text: e.target.value,
-                          maxlength: message.maxlength,
-                        })
-                      }
-                    />
-                    <span className="counter text-white">
-                      {message.text.length} / {message.maxlength}
-                    </span>
-                  </div>
-                </fieldset>
-              </form>
+                </div>
+                <div className="pt-2">
+                  <label className="label pb-2" htmlFor="email">
+                    อาชีพ
+                  </label>
+                  <input
+                    type="text"
+                    name="career"
+                    id="career"
+                    required
+                    className="w-full border p-1"
+                    value={career}
+                    onChange={(e) => setCareer(e.target.value)}
+                  />
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </AnimatedForm>
+        <div className=" col-span-2 row-span-2 ml-2">
+          <AnimatedForm>
+            <form className="vue-form border-2 border-[#ffc107] m-2 p-5 flex flex-col">
+              <fieldset>
+                <div className="text-3xl font-bold text-[#ffc107] text-center pt-2 pb-2 px-6">
+                  Timeline
+                </div>
+                
+                <div className="pt-2">
+                {console.log('Timeline Data:', timelineData)}
+
+                 {timelineData.map((item) => (
+                 <div className="bg-[#ffc107] rounded-full text-black	w-1/3  mx-auto	p-5" key={item.id}>
+                  <div className="text-xl text-center">ผู้ป่วย{item.gender} อายุ {item.age} ปี</div>
+                  <div className="font-extrabold text-center text-sm pt-2">อาชีพ{item.career}</div>
+                 </div>
+
+                
+              ))}
+              </div>
+              </fieldset>
+            </form>
+          </AnimatedForm>
         </div>
+        <AnimatedForm>
+          <div className=" col-span-1">
+            <form className="vue-form bg-[#234973] m-2 p-5 flex flex-col">
+              <fieldset>
+                <legend className="pt-3">ข้อมูลไทม์ไลน์</legend>
+                <div className="pt-2">
+                  <label className="label pb-2" htmlFor="datetime">
+                    วันเวลา
+                  </label>
+                  <DatePicker
+                    selected={selectedDate}
+                    onChange={handleDateChange}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                    className="border p-2 equal-width-input"
+                  />
+                </div>
+                <div>
+                  <label className="label py-2" htmlFor="textarea">
+                    รายละเอียด
+                  </label>
+                  <textarea
+                    className="message border p-2 equal-width-input"
+                    name="textarea"
+                    id="textarea"
+                    required
+                    value={message.text}
+                    maxLength={message.maxlength}
+                    onChange={(e) =>
+                      setMessage({
+                        text: e.target.value,
+                        maxlength: message.maxlength,
+                      })
+                    }
+                  />
+                  <span className="counter text-white">
+                    {message.text.length} / {message.maxlength}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleAddTimeline}
+                  className="bg-[#ffc107] text-white p-2 mt-4 rounded cursor-pointer"
+                >
+                  Add Timeline
+                </button>
+              </fieldset>
+            </form>
+          </div>
         </AnimatedForm>
       </div>
     </>
