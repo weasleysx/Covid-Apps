@@ -97,7 +97,7 @@ export const useTimelineFunctions = () => {
       }
   
       setMessage({ text: "", maxlength: 500 });
-      setSelectedDate(null); 
+      handleDateChange(null); 
       console.log("Timeline added to Firestore!");
       window.location.reload();
     } catch (error) {

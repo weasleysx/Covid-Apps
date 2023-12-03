@@ -40,7 +40,9 @@ const Dashboard = () => {
   const firstPatient: PatientData | undefined = patientData[0];
   const firstTimeline: TimelineData | undefined = timelineData[0];
 
-
+  const handleAddTimelineClick = () => {
+    handleAddTimeline(gender, age, career, selectedDate, message, setGender, setAge, setCareer, handleDateChange, setMessage);
+  };
 
   return (
     <>
@@ -205,7 +207,7 @@ const Dashboard = () => {
                 </div>
                 <button
                   type="button"
-                  onClick={handleAddTimeline} 
+                  onClick={handleAddTimelineClick}
                   className="bg-[#ffc107] text-white p-2 mt-4 rounded cursor-pointer"
                 >
                   Add Timeline
