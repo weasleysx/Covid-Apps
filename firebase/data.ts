@@ -53,7 +53,7 @@ export const useTimelineFunctions = () => {
   const [timelineData, setTimelineData] = useState([]);
 
 
-  const handleDateChange = (date) => {
+  const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
   };
   const handleAddTimeline = async () => {
@@ -100,7 +100,7 @@ export const useTimelineFunctions = () => {
       console.error("Error adding timeline to Firestore: ", error);
     }
   };
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string) => {
     try {
       await db.collection("timelines").doc(id).delete();
   
@@ -121,12 +121,12 @@ export const useTimelineFunctions = () => {
 };
 
 export const useFormattingFunctions = () => {
-    const formatDate = (datetimeString) => {
+    const formatDate = (datetimeString: string) => {
         const dateObject = new Date(datetimeString);
         const formattedDate = dateObject.toLocaleDateString('en-US'); // Adjust the locale as needed
         return formattedDate;
       };
-      const formatTime = (datetimeString) => {
+      const formatTime = (datetimeString: string) => {
         const dateObject = new Date(datetimeString);
         const formattedTime = dateObject.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
         return formattedTime;
