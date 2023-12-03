@@ -1,11 +1,11 @@
-interface PatientData {
+export interface PatientData {
     id: string;
     gender: string;
     age: number;
     career: string;
   }
   
-  interface TimelineData {
+export interface TimelineData {
     id: string;
     datetime: string;
     details: string;
