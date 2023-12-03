@@ -107,8 +107,9 @@ export const useTimelineFunctions = () => {
   const handleDelete = async (id: string) => {
     try {
       await db.collection("timelines").doc(id).delete();
-  
-      setTimelineData((prevData) => prevData.filter((item) => item.id !== id));
+      setTimelineData((prevData) => {
+        return prevData.filter((item: TimelineData) => item.id !== id);
+      });
   
       window.location.reload();
     } catch (error) {
