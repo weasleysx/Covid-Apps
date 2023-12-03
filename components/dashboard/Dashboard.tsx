@@ -9,6 +9,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTimelineData, usePatientData, useTimelineFunctions, useFormattingFunctions } from '../../firebase/data';
 import { PatientData, TimelineData } from '../../services/data';
+import { format } from 'date-fns';
 
 
 library.add(faTimes);
@@ -41,8 +42,10 @@ const Dashboard = () => {
   const firstTimeline: TimelineData | undefined = timelineData[0];
 
   const handleAddTimelineClick = () => {
+    const formattedDate = selectedDate ? format(selectedDate, 'yyyy-MM-dd HH:mm:ss') : null;
 
-    handleAddTimeline(gender, age, career, selectedDate, message, setGender, setAge, setCareer, handleDateChange, setMessage);
+
+    handleAddTimeline(gender, age, career, formattedDate, message, setGender, setAge, setCareer, handleDateChange, setMessage);
   };
 
   return (
