@@ -28,7 +28,7 @@ const AnimatedForm: React.FC<AnimatedFormProps> = ({ children }) => {
   
 
 const Dashboard = () => {
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState('');
   const [age, setAge] = useState("");
   const [career, setCareer] = useState("");
   const [message, setMessage] = useState({ text: "", maxlength: 500 });
