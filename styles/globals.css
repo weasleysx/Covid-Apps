@@ -91,7 +91,7 @@ a {
 }
 .right {
   /* left: 50%; */
-  left:10px;
+  left:11px;
 }
 .right::before {
   content: " ";
