@@ -29,7 +29,7 @@ const AnimatedForm: React.FC<AnimatedFormProps> = ({ children }) => {
 
 const Dashboard = () => {
   const [gender, setGender] = useState('');
-  const [age, setAge] = useState("");
+  const [age, setAge] =  useState<number>(0);
   const [career, setCareer] = useState("");
   const [message, setMessage] = useState({ text: "", maxlength: 500 });
   const timelineData: TimelineData[] = useTimelineData();
