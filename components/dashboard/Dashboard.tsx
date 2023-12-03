@@ -8,6 +8,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTimelineData, usePatientData, useTimelineFunctions, useFormattingFunctions } from '../../firebase/data';
+import { PatientData, TimelineData } from '../../services/data';
 
 
 library.add(faTimes);
@@ -30,15 +31,14 @@ const Dashboard = () => {
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
   const [career, setCareer] = useState("");
-  // const [selectedDate, setSelectedDate] = useState(null);
   const [message, setMessage] = useState({ text: "", maxlength: 500 });
-  
-
-  const timelineData = useTimelineData();
-  const patientData = usePatientData();
+  const timelineData: TimelineData[] = useTimelineData();
+  const patientData: PatientData[] = usePatientData();
   const { selectedDate, handleDateChange, handleAddTimeline,  handleDelete } = useTimelineFunctions();
   const { formatDate, formatTime } = useFormattingFunctions();
   
+  const firstPatient: PatientData | undefined = patientData[0];
+  const firstTimeline: TimelineData | undefined = timelineData[0];
 
 
 
