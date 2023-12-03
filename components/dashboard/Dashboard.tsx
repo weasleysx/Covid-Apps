@@ -92,7 +92,7 @@ const Dashboard = () => {
                       id="age"
                       required
                       value={age}
-                      onChange={(e) => setAge(e.target.value)}
+                      onChange={(e) => setAge(parseInt(e.target.value, 10))}
                       className="w-full border p-1"
                     />
                   </div>
