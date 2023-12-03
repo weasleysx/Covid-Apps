@@ -1,6 +1,5 @@
 // Shell.jsx
 import React from "react";
-import Footer from "./Footer/Footer";
 import Dashboard from "../dashboard";
 
 
@@ -11,8 +10,6 @@ export default function Shell() {
         <main>
           <Dashboard />
         </main>
-        <Footer />
-       
       </div>
     </>
   );
