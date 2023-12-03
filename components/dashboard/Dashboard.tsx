@@ -16,7 +16,7 @@ interface AnimatedFormProps {
   children: ReactNode;
 }
 
-const AnimatedForm = ({ children }) => {
+const AnimatedForm: React.FC<AnimatedFormProps> = ({ children }) => {
   const props = useSpring({
     opacity: 1,
     from: { opacity: 0 },
