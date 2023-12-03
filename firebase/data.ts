@@ -3,6 +3,7 @@ import { db } from './clientApp';
 import { format } from 'date-fns';
 import {TimelineData, PatientData} from '../services/data';
 
+
 export const useTimelineData = () => {
     const [timelineData, setTimelineData] = useState<TimelineData[]>([]);
 
@@ -47,7 +48,7 @@ export const useTimelineData = () => {
 
 
 export const useTimelineFunctions = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null); 
   const [message, setMessage] = useState({ text: '', maxlength: 500 });
   const [timelineData, setTimelineData] = useState([]);
 
