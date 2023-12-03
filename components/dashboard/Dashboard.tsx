@@ -37,15 +37,13 @@ const Dashboard = () => {
   const patientData: PatientData[] = usePatientData();
   const { selectedDate, handleDateChange, handleAddTimeline,  handleDelete } = useTimelineFunctions();
   const { formatDate, formatTime } = useFormattingFunctions();
+  const [setSelectedDate] = useState<Date | null>(null);
 
   const firstPatient: PatientData | undefined = patientData[0];
   const firstTimeline: TimelineData | undefined = timelineData[0];
 
   const handleAddTimelineClick = () => {
-    const formattedDate = selectedDate ? format(selectedDate, 'yyyy-MM-dd HH:mm:ss') : null;
-
-
-    handleAddTimeline(gender, age, career, formattedDate, message, setGender, setAge, setCareer, handleDateChange, setMessage);
+    handleAddTimeline(gender, age, career, selectedDate, message, setGender, setAge, setCareer, setSelectedDate, setMessage);
   };
 
   return (
