@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, ReactNode } from "react";
 import { useSpring, animated } from "react-spring";
 import { signOut } from "../../utils/genericUtils";
 import Svg from "../svg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { format } from 'date-fns';
-import { db } from "../../firebase/clientApp"; 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +12,9 @@ import { useTimelineData, usePatientData, useTimelineFunctions, useFormattingFun
 
 library.add(faTimes);
 
-
+interface AnimatedFormProps {
+  children: ReactNode;
+}
 
 const AnimatedForm = ({ children }) => {
   const props = useSpring({
