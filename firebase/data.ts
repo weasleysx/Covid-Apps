@@ -56,7 +56,7 @@ export const useTimelineFunctions = () => {
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
   };
-  const handleAddTimeline = async (gender:string , age:number , career:string ,  selectedDate: Date | null,   message: { text: string },setGender: React.Dispatch<React.SetStateAction<string>>,
+  const handleAddTimeline = async (gender:string , age:number , career:string ,  selectedDate: string | null,   message: { text: string },setGender: React.Dispatch<React.SetStateAction<string>>,
     setAge: React.Dispatch<React.SetStateAction<number>>,
     setCareer: React.Dispatch<React.SetStateAction<string>>,
     setSelectedDate: React.Dispatch<React.SetStateAction<Date | null>>,
