@@ -1,49 +1,49 @@
 import { useState, useEffect } from 'react';
 import { db } from './clientApp';
 import { format } from 'date-fns';
+import {TimelineData, PatientData} from '../services/data';
 
 export const useTimelineData = () => {
-  const [timelineData, setTimelineData] = useState([]);
+    const [timelineData, setTimelineData] = useState<TimelineData[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const snapshot = await db.collection('timelines').get();
-        const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        setTimelineData(data);
-      } catch (error) {
-        console.error('Error fetching timeline data from Firestore: ', error);
-      }
-    };
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const snapshot = await db.collection('timelines').get();
+            const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as TimelineData));
+            setTimelineData(data);
+          } catch (error) {
+            console.error('Error fetching timeline data from Firestore: ', error);
+          }
+        };
+    
+        fetchData();
+      }, []);
+      return timelineData;
+    };    
 
-    fetchData();
-  }, []);
-
-  return timelineData;
-};
-
-export const usePatientData = () => {
-  const [patientData, setPatientData] = useState([]);
-
-  useEffect(() => {
-    const fetchPatientData = async () => {
-      try {
-        const patientSnapshot = await db.collection('patients').doc('uniqueID').get();
-        const patientData = patientSnapshot.exists ? [patientSnapshot.data()] : [];
-
-        console.log('Fetched Patient Data:', patientData);
-
-        setPatientData(patientData);
-      } catch (error) {
-        console.error('Error fetching patient data from Firestore: ', error);
-      }
-    };
-
-    fetchPatientData();
-  }, []);
-
-  return patientData;
-};
+    export const usePatientData = () => {
+        const [patientData, setPatientData] = useState<PatientData[]>([]);
+      
+        useEffect(() => {
+          const fetchPatientData = async () => {
+            try {
+              const patientSnapshot = await db.collection('patients').doc('uniqueID').get();
+              const patientData = patientSnapshot.exists ? [patientSnapshot.data() as PatientData] : [];
+      
+              console.log('Fetched Patient Data:', patientData);
+      
+              setPatientData(patientData);
+            } catch (error) {
+              console.error('Error fetching patient data from Firestore: ', error);
+            }
+          };
+      
+          fetchPatientData();
+        }, []);
+      
+        return patientData;
+      };
 
 
 export const useTimelineFunctions = () => {

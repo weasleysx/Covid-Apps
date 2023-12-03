@@ -205,7 +205,7 @@ const Dashboard = () => {
                 </div>
                 <button
                   type="button"
-                  onClick={handleAddTimeline}
+                  onClick={handleAddTimeline} 
                   className="bg-[#ffc107] text-white p-2 mt-4 rounded cursor-pointer"
                 >
                   Add Timeline
