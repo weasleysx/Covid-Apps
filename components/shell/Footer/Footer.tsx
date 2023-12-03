@@ -1,6 +1,4 @@
-import React, { createContext, useContext } from "react";
-import useLocalStorage from "../../../utils/hooks/useLocalStorage";
-import Link from "next/link";
+import React from "react";
 import { signOut } from "../../../utils/genericUtils";
 import Svg from "../../svg/";
 
