@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
-import hero from "../../images/hero.png";
+
 
 export default function Splash() {
   return (
