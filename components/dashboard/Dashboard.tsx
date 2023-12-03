@@ -41,9 +41,8 @@ const Dashboard = () => {
   const firstTimeline: TimelineData | undefined = timelineData[0];
 
   const handleAddTimelineClick = () => {
-    const ageAsNumber = parseInt(age, 10);
 
-    handleAddTimeline(gender, ageAsNumber, career, selectedDate, message, setGender, setAge, setCareer, handleDateChange, setMessage);
+    handleAddTimeline(gender, age, career, selectedDate, message, setGender, setAge, setCareer, handleDateChange, setMessage);
   };
 
   return (
