@@ -3,7 +3,6 @@ import Auth from "../components/auth";
 import { GetServerSidePropsContext } from "next";
 import nookies from "nookies";
 import { userIsLoggedIn } from "../firebase/auth/utils";
-import LogoSvg from "../images/svg/logo.svg";
 
 export default function Login() {
   return (
