@@ -1,6 +1,7 @@
 // import { initializeApp } from "firebase/app";
 // import { getFirestore } from "firebase/firestore";
 // import firebaseClient from "./clientApp";
+export {};
 
 // // Other imports if you're using other Firebase services
 
